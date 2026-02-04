@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #fce4ec, #f8bbd9);
+            color: #333;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #e91e63;
+        }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #ad1457;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .optionBtn {
+            background-color: #e91e63;
+            color: white;
+        }
+        .optionBtn:hover {
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+        #yesBtn:hover {
+            background-color: #388e3c;
+            transform: scale(1.05);
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+        }
+        #noBtn:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+        #response {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .hearts {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .section {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="intro" class="section">
+        <h1>Will You Be My Valentine? 💖</h1>
+        <p>Hey Neel, let's test your memory! Answer these questions to win my heart.</p>
+        <div class="hearts">❤️ 💕 💖 💘</div>
+    </div>
+
+    <div id="question1" class="section">
+        <h2>When was our first date?</h2>
+        <button class="optionBtn" data-answer="10th">10th</button>
+        <button class="optionBtn" data-answer="15th">15th</button>
+        <button class="optionBtn" data-answer="21st">21st</button>
+    </div>
+
+    <div id="question2" class="section hidden">
+        <h2>When did we get into relationship?</h2>
+        <button class="optionBtn" data-answer="30">30</button>
+        <button class="optionBtn" data-answer="31">31</button>
+        <button class="optionBtn" data-answer="first">First</button>
+    </div>
+
+    <div id="finalAsk" class="section hidden">
+        <h2>Now, will you be my Valentine? 💖</h2>
+        <button id="yesBtn">Yes! 😍</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+
+    <div id="response"></div>
+
+    <script>
+        const question1 = document.getElementById('question1');
+        const question2 = document.getElementById('question2');
+        const finalAsk = document.getElementById('finalAsk');
+        const response = document.getElementById('response');
+        const optionBtns = document.querySelectorAll('.optionBtn');
+
+        let currentQuestion = 1;
+        let q1Correct = false;
+
+        optionBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const answer = e.target.getAttribute('data-answer');
+                if (currentQuestion === 1) {
+                    if (answer === '15th') {
+                        response.textContent = "Correct! 😊 Let's move on.";
+                        response.style.color = "#4caf50";
+                        q1Correct = true;
+                        setTimeout(() => {
+                            question1.classList.add('hidden');
+                            question2.classList.remove('hidden');
+                            response.textContent = "";
+                            currentQuestion = 2;
+                        }, 2000);
+                    } else {
+                        response.textContent = "You are wrong. You have to buy me a gift. 😏";
+                        response.style.color = "#f44336";
+                        // Stay on Q1, no progression
+                    }
+                } else if (currentQuestion === 2) {
+                    if (answer === '31') {
+                        response.textContent = "Correct! ❤️ Now for the big question...";
+                        response.style.color = "#4caf50";
+                        setTimeout(() => {
+                            question2.classList.add('hidden');
+                            finalAsk.classList.remove('hidden');
+                            response.textContent = "";
+                        }, 2000);
+                    } else {
+                        response.textContent = "You are wrong. You have to take me on a date. 😘";
+                        response.style.color = "#f44336";
+                        // Stay on Q2, no progression
+                    }
+                }
+            });
+        });
+
+        // Final ask buttons
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+
+        yesBtn.addEventListener('click', () => {
+            response.textContent = "Yay! I love you! ❤️";
+            response.style.color = "#4caf50";
+        });
+
+        noBtn.addEventListener('click', () => {
+            response.textContent = "Aww, maybe next time? 😊";
+            response.style.color = "#f44336";
+        });
+    </script>
+</body>
+</html>
